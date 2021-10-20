@@ -65,6 +65,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Setup Maven settings.xml
+        uses: whelk-io/maven-settings-xml-action@v11
+        with:
+          servers: '[{ "id": "releases-repo", "username": "${{ secrets.ARTIFACTORY_USERNAME }}", "password": "${{ secrets.ARTIFACTORY_TOKEN }}" }, { "id": "snapshots-repo", "username": "${{ secrets.ARTIFACTORY_USERNAME }}", "password": "${{ secrets.ARTIFACTORY_TOKEN }}" }]'
+          repositories: '[{ "id": "releases-repo", "name": "devtime-release", "url": "https://devtime.jfrog.io/artifactory/devtime-release/", "releases.enabled": "true", "snapshots.enabled": "false" }, { "id": "snapshots-repo", "name": "devtime-snapshot", "url": "https://devtime.jfrog.io/artifactory/devtime-snapshot/", "releases.enabled": "false", "snapshots.enabled": "true" }]'
       - name: Build and analyze
         if: env.LAST_COMMIT == 0
         env:
