@@ -32,7 +32,7 @@ Siehe <a href="https://github.com/dev-time-tpw/parent-pom#über-uns">Über uns (
 
 ## Lizenzierung
 
-Copyright (c) 2020 <img src="https://raw.githubusercontent.com/dev-time-tpw/parent-pom/main/images/dev-time-86x12.png">.
+Copyright (c) 2021 <img src="https://raw.githubusercontent.com/dev-time-tpw/parent-pom/main/images/dev-time-86x12.png">.
 
 Lizenziert unter **Apache-Lizenz, Version 2.0** (die "Lizenz"). Sie dürfen diese Datei ausschließlich im Einklang mit 
 der Lizenz verwenden.
