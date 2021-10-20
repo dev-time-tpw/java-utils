@@ -8,7 +8,7 @@
     <a href="https://github.com/dev-time-tpw/java-utils/blob/main/LICENSE" title="License"><img src="https://img.shields.io/github/license/dev-time-tpw/java-utils?logo=GitHub"></a>
     <a href="https://github.com/dev-time-tpw/java-utils" title="Last Commit"><img src="https://img.shields.io/github/last-commit/dev-time-tpw/java-utils?logo=GitHub"></a>
 	<br>    
-    <a href="https://sonarcloud.io/dashboard?id=devtime_java-utils" title="Quality Gate"><img src="https://img.shields.io/sonar/quality_gate/devtime_java-utils?logo=SonarCloud&server=https%3A%2F%2Fsonarcloud.io"></a>
+    <a href="https://sonarcloud.io/dashboard?id=devtime_java-utils" title="Quality Gate"><img src="https://sonarcloud.io/api/project_badges/measure?project=devtime_java-utils&metric=alert_status"></a>
     <a href="https://sonarcloud.io/dashboard?id=devtime_java-utils" title="Successful tests"><img src="https://img.shields.io/sonar/test_success_density/devtime_java-utils?logo=SonarCloud&server=https%3A%2F%2Fsonarcloud.io"></a>
     <a href="https://sonarcloud.io/dashboard?id=devtime_java-utils" title="Coverage"><img src="https://img.shields.io/sonar/coverage/devtime_java-utils?logo=SonarCloud&server=https%3A%2F%2Fsonarcloud.io"></a>
     <a href="https://sonarcloud.io/dashboard?id=devtime_java-utils" title="Lines of code"><img src="https://sonarcloud.io/api/project_badges/measure?project=devtime_java-utils&metric=ncloc"></a>
