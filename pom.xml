@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.devtime.common</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>de.devtime.util</groupId>
+	<artifactId>java-utils-build</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>java-utils - build module</name>
+	<description>Parent pom of the java-utils project</description>
+
+	<modules>
+		<module>java-utils</module>
+		<module>java-utils-logging</module>
+		<module>java-utils-resources</module>
+		<module>java-utils-swing</module>
+	</modules>
+
+	<scm>
+		<developerConnection>scm:git:https://github.com/dev-time-tpw/java-utils.git</developerConnection>
+		<url>https://github.com/dev-time-tpw/java-utils</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<properties>
+		<!-- Used by SonarCloud -->
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.organization>devtime</sonar.organization>
+		<sonar.projectKey>devtime_java-utils</sonar.projectKey>
+		<!-- solution for StackOverflowError problem (@see: https://community.sonarsource.com/t/stackoverflowerror-at-defaultinputcomponent-equals/20324) -->
+		<sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+
+		<image-comparison.version>4.4.0</image-comparison.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- image-comparison: Useful utils for image comparison -->
+			<dependency>
+				<groupId>com.github.romankh3</groupId>
+				<artifactId>image-comparison</artifactId>
+				<version>${image-comparison.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
