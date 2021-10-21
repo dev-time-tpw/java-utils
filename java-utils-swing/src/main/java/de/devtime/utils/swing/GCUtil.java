@@ -49,6 +49,9 @@ public class GCUtil {
       final Insets insets) {
     Preconditions.checkArgument(Objects.nonNull(gc), "The GridBagConstrains object must not be null!");
 
+    // TODO check if code smell can be solved
+    // by morrigan on 21.10.2021
+
     gc.gridx = gridx;
     gc.gridy = gridy;
     gc.anchor = anchor;
