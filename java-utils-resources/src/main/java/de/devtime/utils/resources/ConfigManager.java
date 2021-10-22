@@ -1,6 +1,7 @@
 package de.devtime.utils.resources;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.Properties;
@@ -100,7 +101,14 @@ public class ConfigManager {
     if (filename.startsWith("/")) {
       this.configs.load(getClass().getResourceAsStream(filename));
     } else {
-      this.configs.load(getClass().getResourceAsStream(StringUtils.join("/", filename)));
+      InputStream inputStream = getClass().getResourceAsStream(filename);
+      if (inputStream == null) {
+        inputStream = ConfigManager.class.getResourceAsStream(StringUtils.join("/", filename));
+        if (inputStream == null) {
+          throw new IOException(MessageFormatter.format("File {} not found", filename).getMessage());
+        }
+      }
+      this.configs.load(inputStream);
     }
   }
 
