@@ -39,9 +39,13 @@ public class LanguageManager {
   private static final LanguageManager INSTANCE = new LanguageManager();
   private static final String COLON = ":";
 
+  // checkstyle:WriteTag OFF
+
   private enum Bundle {
     LABELS, MESSAGES, ERRORS
   }
+
+  // checkstyle:WriteTag ON
 
   private Map<Locale, ResourceBundle> labels;
   private Map<Locale, ResourceBundle> messages;
@@ -327,6 +331,8 @@ public class LanguageManager {
     this.errors = new HashMap<>();
   }
 
+  // checkstyle:WriteTag OFF
+
   private Set<String> toSet(ResourceBundle bundle) {
     Set<String> result = new HashSet<>();
     Enumeration<String> keys = bundle.getKeys();
@@ -402,4 +408,6 @@ public class LanguageManager {
         throw new IllegalStateException("Missing mapping for bundle: " + bundle);
     }
   }
+
+  // checkstyle:WriteTag ON
 }

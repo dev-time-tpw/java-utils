@@ -230,6 +230,8 @@ public class FontManager {
     this.fontCache.clear();
   }
 
+  // checkstyle:WriteTag OFF
+
   private void addFont(String fontName, int fontType, String filePath) throws FontFormatException, IOException {
     this.fontCache.put(fontName, Font.createFont(fontType, getClass().getResourceAsStream("/" + filePath)));
   }
@@ -254,4 +256,6 @@ public class FontManager {
     }
     return result;
   }
+
+  // checkstyle:WriteTag ON
 }

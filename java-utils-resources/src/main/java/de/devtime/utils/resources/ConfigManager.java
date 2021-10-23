@@ -134,6 +134,8 @@ public class ConfigManager {
     this.configs.clear();
   }
 
+  // checkstyle:WriteTag OFF
+
   private String replacePlaceholder(String value, Object... parameters) {
     return MessageFormatter.arrayFormat(value, parameters).getMessage();
   }
@@ -158,4 +160,6 @@ public class ConfigManager {
     }
     return Optional.of(value);
   }
+
+  // checkstyle:WriteTag ON
 }

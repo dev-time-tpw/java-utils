@@ -239,6 +239,8 @@ public class ImageManager {
     this.imageCache.clear();
   }
 
+  // checkstyle:WriteTag OFF
+
   private void addImage(String imageName, String filePath) throws IOException {
     this.imageCache.put(imageName, ImageIO.read(getClass().getResourceAsStream("/" + filePath)));
   }
@@ -277,4 +279,6 @@ public class ImageManager {
     }
     return result;
   }
+
+  // checkstyle:WriteTag ON
 }
