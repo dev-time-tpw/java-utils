@@ -11,19 +11,19 @@ import java.awt.Insets;
 
 import org.junit.Test;
 
-import de.devtime.utils.swing.GCUtil;
+import de.devtime.utils.swing.GcUtil;
 
 public class GCUtilTest {
 
   @Test
   public void testConfigGCWithNull() {
-    assertThrows(IllegalArgumentException.class, () -> GCUtil.configGC(null, 1, 2, 3, 4, 5.0, 6.0, 7, 8, null));
+    assertThrows(IllegalArgumentException.class, () -> GcUtil.configGc(null, 1, 2, 3, 4, 5.0, 6.0, 7, 8, null));
   }
 
   @Test
   public void testConfigGC() {
     GridBagConstraints gc = new GridBagConstraints();
-    GCUtil.configGC(gc, 1, 2, 3, 4, 5.0, 6.0, 7, 8, new Insets(11, 22, 33, 44));
+    GcUtil.configGc(gc, 1, 2, 3, 4, 5.0, 6.0, 7, 8, new Insets(11, 22, 33, 44));
     assertThat(gc.gridx, is(equalTo(1)));
     assertThat(gc.gridy, is(equalTo(2)));
     assertThat(gc.anchor, is(equalTo(3)));

@@ -21,7 +21,9 @@ import com.google.common.base.Preconditions;
 public class ConfigManager {
 
   /**
-   * @return only instance of this manager
+   * Returns the only instance of this manager.
+   *
+   * @return this manager
    * @since 0.0.1
    */
   public static ConfigManager getInstance() {
@@ -83,6 +85,7 @@ public class ConfigManager {
   /**
    * Loads all configurations from the specified properties file. The file must be located on the classpath and is
    * specified with the .properties file extension.
+   *
    * <p>
    * <b>Example</b><br>
    *
@@ -113,7 +116,9 @@ public class ConfigManager {
   }
 
   /**
-   * @return all keys that was previously loaded from a property file
+   * Returns all keys that was previously loaded from a property file.
+   *
+   * @return a set of keys
    * @since 0.0.1
    */
   public Set<String> getConfigKeys() {

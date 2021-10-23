@@ -27,7 +27,9 @@ public class LanguageManager {
   private static final Logger LOG = LoggerFactory.getLogger(LanguageManager.class);
 
   /**
-   * @return only instance of this manager
+   * Returns the only instance of this manager.
+   *
+   * @return this manager
    * @since 0.0.1
    */
   public static LanguageManager getInstance() {
@@ -252,7 +254,9 @@ public class LanguageManager {
   }
 
   /**
-   * @return all keys from all labels that was previously loaded.
+   * Returns all keys from all labels that was previously loaded.
+   *
+   * @return a set of keys
    * @since 0.0.1
    */
   public Set<String> getLabelKeys() {
@@ -260,8 +264,10 @@ public class LanguageManager {
   }
 
   /**
+   * Returns all keys to all labels of the given language.
+   *
    * @param locale a language
-   * @return all keys to all labels of the given language
+   * @return a set of keys
    * @since 0.0.1
    */
   public Set<String> getLabelKeys(Locale locale) {
@@ -269,7 +275,9 @@ public class LanguageManager {
   }
 
   /**
-   * @return all keys from all messages that was previously loaded.
+   * Returns all keys from all messages that was previously loaded.
+   *
+   * @return a set of keys
    * @since 0.0.1
    */
   public Set<String> getMessageKeys() {
@@ -277,8 +285,10 @@ public class LanguageManager {
   }
 
   /**
+   * Returns all keys to all messages of the given language.
+   *
    * @param locale a language
-   * @return all keys to all messages of the given language
+   * @return a set of keys
    * @since 0.0.1
    */
   public Set<String> getMessageKeys(Locale locale) {
@@ -286,7 +296,9 @@ public class LanguageManager {
   }
 
   /**
-   * @return all keys from all error messages that was previously loaded.
+   * Returns all keys from all error messages that was previously loaded.
+   *
+   * @return a set of keys
    * @since 0.0.1
    */
   public Set<String> getErrorKeys() {
@@ -294,8 +306,10 @@ public class LanguageManager {
   }
 
   /**
+   * Returns all keys to all error messages of the given language.
+   *
    * @param locale a language
-   * @return all keys to all error messages of the given language
+   * @return a set of keys
    * @since 0.0.1
    */
   public Set<String> getErrorKeys(Locale locale) {

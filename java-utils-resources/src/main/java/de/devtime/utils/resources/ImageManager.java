@@ -26,6 +26,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * All images that are required for an application are managed here.
+ *
  * <p>
  * Currently the following image formats are supported.
  * <ul>
@@ -45,7 +46,9 @@ public class ImageManager {
   private static final Logger LOG = LoggerFactory.getLogger(ImageManager.class);
 
   /**
-   * @return only instance of this manager
+   * Returns the only instance of this manager.
+   *
+   * @return this manager
    * @since 0.0.1
    */
   public static ImageManager getInstance() {
@@ -54,7 +57,7 @@ public class ImageManager {
 
   private static final ImageManager INSTANCE = new ImageManager();
 
-  /** Supported file extensions corresponding to the image format */
+  /** Supported file extensions corresponding to the image format. */
   private static final String[] SUPPORTED_FILE_EXTENSIONS = new String[] {
       ".bmp", ".gif", ".ico", ".jpg", ".jpeg", ".png", ".tif", ".tiff",
       ".BMP", ".GIF", ".ICO", ".JPG", ".JPEG", ".PNG", ".TIF", ".TIFF"

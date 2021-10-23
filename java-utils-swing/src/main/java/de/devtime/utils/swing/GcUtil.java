@@ -13,7 +13,7 @@ import com.google.common.base.Preconditions;
  * @author morrigan
  * @since 0.0.1
  */
-public class GCUtil {
+public class GcUtil {
 
   public static final int WEST = GridBagConstraints.WEST;
   public static final int SOUTH = GridBagConstraints.SOUTH;
@@ -44,7 +44,7 @@ public class GCUtil {
    * @param insets {@link GridBagConstraints#insets}
    * @since 0.0.1
    */
-  public static void configGC(final GridBagConstraints gc, final int gridx, final int gridy, final int anchor,
+  public static void configGc(final GridBagConstraints gc, final int gridx, final int gridy, final int anchor,
       final int fill, final double weightx, final double weighty, final int gridwidth, final int gridheight,
       final Insets insets) {
     Preconditions.checkArgument(Objects.nonNull(gc), "The GridBagConstrains object must not be null!");
@@ -63,7 +63,7 @@ public class GCUtil {
     gc.insets = insets;
   }
 
-  private GCUtil() {
+  private GcUtil() {
     super();
   }
 }
