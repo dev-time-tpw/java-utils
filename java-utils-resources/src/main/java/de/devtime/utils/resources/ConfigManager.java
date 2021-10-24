@@ -101,18 +101,16 @@ public class ConfigManager {
   public void loadAllConfigsFromResources(String filename) throws IOException {
     Preconditions.checkArgument(!StringUtils.isBlank(filename), "The filename must not be blank!");
     this.configFilename = filename;
+    InputStream inputStream;
     if (filename.startsWith("/")) {
-      this.configs.load(getClass().getResourceAsStream(filename));
+      inputStream = getClass().getResourceAsStream(filename);
     } else {
-      InputStream inputStream = getClass().getResourceAsStream(filename);
-      if (inputStream == null) {
-        inputStream = ConfigManager.class.getResourceAsStream(StringUtils.join("/", filename));
-        if (inputStream == null) {
-          throw new IOException(MessageFormatter.format("File {} not found", filename).getMessage());
-        }
-      }
-      this.configs.load(inputStream);
+      inputStream = ConfigManager.class.getResourceAsStream(StringUtils.join("/", filename));
     }
+    if (inputStream == null) {
+      throw new IOException(MessageFormatter.format("File {} not found", filename).getMessage());
+    }
+    this.configs.load(inputStream);
   }
 
   /**

@@ -47,6 +47,16 @@ public class ConfigManagerTest {
   }
 
   @Test
+  public void testLoadConfigsWithNullStream() throws IOException {
+    assertThrows(IOException.class, () -> this.sut.loadAllConfigsFromResources("/null"));
+  }
+
+  @Test
+  public void testLoadConfigsWithNullStream2() throws IOException {
+    assertThrows(IOException.class, () -> this.sut.loadAllConfigsFromResources("null"));
+  }
+
+  @Test
   public void testLoadConfigsWithoutSlashPrefix() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     assertThat(this.sut.getConfigKeys(), hasSize(ABSOLUTE_AMOUNT_OF_CONFIG_ITEMS));
