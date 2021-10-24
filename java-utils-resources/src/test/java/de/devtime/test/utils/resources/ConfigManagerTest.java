@@ -89,7 +89,8 @@ public class ConfigManagerTest {
   }
 
   @Test
-  public void testGetConfigWithNullKey() {
+  public void testGetConfigWithNullKey() throws IOException {
+    this.sut.loadAllConfigsFromResources("config.properties");
     MissingResourceException exception = assertThrows(MissingResourceException.class,
         () -> this.sut.getConfig(null));
     assertThat(exception.getMessage(), containsString("null"));
@@ -100,7 +101,8 @@ public class ConfigManagerTest {
   }
 
   @Test
-  public void testGetConfigWithMissingKey() {
+  public void testGetConfigWithMissingKey() throws IOException {
+    this.sut.loadAllConfigsFromResources("config.properties");
     MissingResourceException exception = assertThrows(MissingResourceException.class,
         () -> this.sut.getConfig("missing"));
     assertThat(exception.getMessage(), containsString("missing"));
