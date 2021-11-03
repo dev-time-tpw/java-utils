@@ -32,29 +32,44 @@
 
 <hr />
 <p align="center">
-    <a class="none" href="#über-dieses-projekt">Über dieses Projekt</a> •
-    <a class="none" href="#über-uns">Über uns</a> •
-    <a class="none" href="#lizenzierung">Lizenzierung</a>
+    <a class="none" href="#about-this-account">About this account</a> •
+    <a class="none" href="#about-java-uitls">About java-utils</a> •
+    <a class="none" href="#licensing">Licensing</a>
 </p>
 <hr />
 
-## Über dieses Projekt
+<a name="about-this-account"></a>
 
-In diesem Projekt sind diverse Util Klassen zu einer Sammlung vereint, die von unseren Projekten je nach Bedarf genutzt werden. Die Klassen wurden in entsprechende Module ausgelagert, um diese wiederverwendbar und wartbar zu gestalten. Daher werden auch immer wieder Anpassungen und Ergänzungen durchgeführt, in Abhängigkeit der Anforderungen von neuen Projekten.
+## About this account
 
-## Über uns
+See <a class="none" href="https://github.com/dev-time-tpw/parent-pom#about-this-account">About this account (in parent-pom)</a>
 
-Siehe <a class="none" href="https://github.com/dev-time-tpw/parent-pom#über-uns">Über uns (in parent-pom)</a>
+<a name="about-java-uitls"></a>
 
-## Lizenzierung
+## About java-utils
+
+This project provides several utilities classes that are used by some projects on this account. Currently there are 
+different modules for different topics like:
+
+* common utilities
+* logging
+* resources
+* swing
+
+This approach is intended to enable high reusability, maintainability and extensibility. This way, useful things only 
+need to be developed, tested and deployed once and can be continuously developed further.
+
+<a name="licensing"></a>
+
+## Licensing
 
 Copyright (c) 2021 <img src="https://raw.githubusercontent.com/dev-time-tpw/parent-pom/main/images/dev-time-86x15.png" />.
 
-Lizenziert unter **Apache-Lizenz, Version 2.0** (die "Lizenz"). Sie dürfen diese Datei ausschließlich im Einklang mit 
-der Lizenz verwenden.
+Licensed under the **Apache License, Version 2.0** (the "License"). You may not use this file except in compliance with 
+the License.
 
-Eine Kopie der Lizenz erhalten Sie unter https://www.apache.org/licenses/LICENSE-2.0.
+You may obtain a copy of the License at https://www.apache.org/licenses/LICENSE-2.0.
 
-Sofern nicht durch anwendbares Recht gefordert oder schriftlich vereinbart, wird jede unter der Lizenz bereitgestellte 
-Software „OHNE MÄNGELGEWÄHR“ UND OHNE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GARANTIE JEGLICHER ART bereitgestellt. 
-Die genauen Angaben zu Genehmigungen und Einschränkungen unter der Lizenz finden Sie in der [LIZENZ](LICENSE).
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an 
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific 
+language governing permissions and limitations under the <a class="none" href="https://raw.githubusercontent.com/dev-time-tpw/parent-pom/main/LICENSE">LICENSE</a>.

@@ -15,6 +15,7 @@
 
 	<name>java-utils - build module</name>
 	<description>Parent pom of the java-utils project</description>
+	<url>http://dev-time.de/javadoc/checkstyle-parent-pom/java-utils-build/index.html</url>
 
 	<modules>
 		<module>java-utils</module>
@@ -38,8 +39,6 @@
 		<sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
 
 		<image-comparison.version>4.4.0</image-comparison.version>
-		
-<!-- 		<checkstyle_configuration_file>${project.build.directory}/generated-resources/devtime_checks.xml</checkstyle_configuration_file> -->
 	</properties>
 
 	<dependencyManagement>
