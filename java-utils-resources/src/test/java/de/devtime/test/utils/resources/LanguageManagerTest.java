@@ -5,80 +5,78 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.devtime.utils.resources.LanguageManager;
 
-public class LanguageManagerTest {
+class LanguageManagerTest {
 
   private LanguageManager sut = LanguageManager.getInstance();
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     ResourceBundle.clearCache();
     this.sut.clear();
     Locale.setDefault(Locale.GERMANY);
   }
 
   @Test
-  public void testLoadLabelsFromResource() {
+  void testLoadLabelsFromResource() {
     this.sut.loadLabelsFromResources("language/lang");
     assertThat(this.sut.getLabelKeys(), hasSize(3));
   }
 
   @Test
-  public void testLoadMessagesFromResource() {
+  void testLoadMessagesFromResource() {
     this.sut.loadMessagesFromResources("language/messages");
     assertThat(this.sut.getMessageKeys(), hasSize(2));
   }
 
   @Test
-  public void testLoadErrorsFromResource() {
+  void testLoadErrorsFromResource() {
     this.sut.loadErrorsFromResources("language/errors");
     assertThat(this.sut.getErrorKeys(), hasSize(2));
   }
 
   @Test
-  public void testLoadLabelsFromResourceWithBasenameNull() {
-    assertThrows(NullPointerException.class, () -> {
-      this.sut.loadLabelsFromResources(null);
-    });
+  void testLoadLabelsFromResourceWithBasenameNull() {
+    assertThrows(NullPointerException.class, () ->  this.sut.loadLabelsFromResources(null));
   }
 
   @Test
-  public void testLoadLabelsFromResourceWithLocalGerman() {
+  void testLoadLabelsFromResourceWithLocalGerman() {
     this.sut.loadLabelsFromResources("language/labels", Locale.GERMANY);
     assertThat(this.sut.getLabelKeys(Locale.GERMANY), hasSize(1));
   }
 
   @Test
-  public void testLoadMessagesFromResourceWithLocalFrance() {
+  void testLoadMessagesFromResourceWithLocalFrance() {
     this.sut.loadMessagesFromResources("language/messages", Locale.FRANCE);
     assertThat(this.sut.getMessageKeys(Locale.FRANCE), hasSize(3));
   }
 
   @Test
-  public void testLoadErrorsFromResourceWithLocalUK() {
+  void testLoadErrorsFromResourceWithLocalUK() {
     this.sut.loadErrorsFromResources("language/errors", Locale.UK);
     assertThat(this.sut.getErrorKeys(Locale.UK), hasSize(3));
   }
 
   @Test
-  public void testLoadLabelsFromResourceWithLocalNull() {
+  void testLoadLabelsFromResourceWithLocalNull() {
     assertThrows(NullPointerException.class, () -> {
       this.sut.loadLabelsFromResources("language/labels", null);
     });
   }
 
   @Test
-  public void testLoadLabelsFromResourceWithMissingBaseName() {
+  void testLoadLabelsFromResourceWithMissingBaseName() {
     MissingResourceException exception = assertThrows(MissingResourceException.class, () -> {
       this.sut.loadLabelsFromResources("language/missing", Locale.GERMANY);
     });
@@ -86,106 +84,106 @@ public class LanguageManagerTest {
   }
 
   @Test
-  public void testGetLabelWithExistingKey() {
+  void testGetLabelWithExistingKey() {
     this.sut.loadLabelsFromResources("language/labels");
     assertThat(this.sut.getLabel("helloWorld"), is(equalTo("Hallo Welt!")));
   }
 
   @Test
-  public void testGetLabelWithColon() {
+  void testGetLabelWithColon() {
     this.sut.loadLabelsFromResources("language/labels");
     assertThat(this.sut.getLabelWithColon("helloWorld"), is(equalTo("Hallo Welt!:")));
   }
 
   @Test
-  public void testGetLabelWithColonButEmptyValue() {
+  void testGetLabelWithColonButEmptyValue() {
     this.sut.loadLabelsFromResources("language/labels");
     assertThat(this.sut.getLabelWithColon("missing"), is(equalTo("")));
   }
 
   @Test
-  public void testGetLabelWithExistingKeyAndLocaleFR() {
+  void testGetLabelWithExistingKeyAndLocaleFR() {
     this.sut.loadLabelsFromResources("language/labels", Locale.FRANCE);
     assertThat(this.sut.getLabel("helloWorld", Locale.FRANCE), is(equalTo("Bonjour le monde!")));
   }
 
   @Test
-  public void testGetLabelWithColonAndKeyAndLocaleFR() {
+  void testGetLabelWithColonAndKeyAndLocaleFR() {
     this.sut.loadLabelsFromResources("language/labels", Locale.FRANCE);
     assertThat(this.sut.getLabelWithColon("helloWorld", Locale.FRANCE), is(equalTo("Bonjour le monde!:")));
   }
 
   @Test
-  public void testGetLabelWithColonAndKeyAndLocaleFRButEmptyValue() {
+  void testGetLabelWithColonAndKeyAndLocaleFRButEmptyValue() {
     this.sut.loadLabelsFromResources("language/labels", Locale.FRANCE);
     assertThat(this.sut.getLabelWithColon("missing", Locale.FRANCE), is(equalTo("")));
   }
 
   @Test
-  public void testGetMessageWithExistingKey() {
+  void testGetMessageWithExistingKey() {
     this.sut.loadMessagesFromResources("language/messages");
     assertThat(this.sut.getMessage("helloMsg"), is(equalTo("Hallo und herzlich Willkommen!")));
   }
 
   @Test
-  public void testGetMessageWithKeyAndParameters() {
+  void testGetMessageWithKeyAndParameters() {
     this.sut.loadMessagesFromResources("language/messages");
     assertThat(this.sut.getMessage("helloMsgWithParam", "Tom"), is(equalTo("Hallo und herzlich Willkommen Tom!")));
   }
 
   @Test
-  public void testGetMessageWithExistingKeyAndLocaleFR() {
+  void testGetMessageWithExistingKeyAndLocaleFR() {
     this.sut.loadMessagesFromResources("language/messages", Locale.FRANCE);
     assertThat(this.sut.getMessage("helloMsg", Locale.FRANCE), is(equalTo("Bonjour et bienvenue!")));
   }
 
   @Test
-  public void testGetMessageWithKeyAndLocaleFRAndParameters() {
+  void testGetMessageWithKeyAndLocaleFRAndParameters() {
     this.sut.loadMessagesFromResources("language/messages", Locale.FRANCE);
     assertThat(this.sut.getMessage("helloMsgWithParams", Locale.FRANCE, "Tom", "Jerry"),
         is(equalTo("Bonjour et bienvenue Tom and Jerry!")));
   }
 
   @Test
-  public void testGetErrorWithExistingKey() {
+  void testGetErrorWithExistingKey() {
     this.sut.loadErrorsFromResources("language/errors");
     assertThat(this.sut.getError("E0001"), is(equalTo("Unbekannter Fehler")));
   }
 
   @Test
-  public void testGetErrorWithKeyAndParameters() {
+  void testGetErrorWithKeyAndParameters() {
     this.sut.loadErrorsFromResources("language/errors");
     assertThat(this.sut.getError("E0002", NullPointerException.class),
         is(equalTo("Es ist ein interner Fehler aufgetreten. Details: class java.lang.NullPointerException")));
   }
 
   @Test
-  public void testGetErrorWithExistingKeyAndLocaleUK() {
+  void testGetErrorWithExistingKeyAndLocaleUK() {
     this.sut.loadErrorsFromResources("language/errors", Locale.UK);
     assertThat(this.sut.getError("E0001", Locale.UK), is(equalTo("Unknown error")));
   }
 
   @Test
-  public void testGetErrorWithKeyAndLocaleUKAndParameters() {
+  void testGetErrorWithKeyAndLocaleUKAndParameters() {
     this.sut.loadErrorsFromResources("language/errors", Locale.UK);
     assertThat(this.sut.getError("E0003", Locale.UK, "test.txt", 7),
         is(equalTo("File comparison failed for file 'test.txt' in line '7'.")));
   }
 
   @Test
-  public void testGetLabelWithNullKey() {
+  void testGetLabelWithNullKey() {
     this.sut.loadLabelsFromResources("language/labels");
     assertThat(this.sut.getLabel(null), is(equalTo("")));
   }
 
   @Test
-  public void testGetLabelWithNullLocale() {
+  void testGetLabelWithNullLocale() {
     this.sut.loadLabelsFromResources("language/labels");
     assertThat(this.sut.getLabel("helloWorld", null), is(equalTo("Hallo Welt!")));
   }
 
   @Test
-  public void testGetLabelWithMissedLoadingLocaleFR() {
+  void testGetLabelWithMissedLoadingLocaleFR() {
     this.sut.loadLabelsFromResources("language/labels");
     assertThat(this.sut.getLabel("helloWorld", Locale.FRANCE), is(equalTo("")));
     // TODO Logger warning prüfen.
@@ -193,7 +191,7 @@ public class LanguageManagerTest {
   }
 
   @Test
-  public void testGetLabelWithNotExistingKey() {
+  void testGetLabelWithNotExistingKey() {
     this.sut.loadLabelsFromResources("language/labels");
     assertThat(this.sut.getLabel("hello"), is(equalTo("")));
     // TODO Logger warning prüfen.
@@ -201,7 +199,7 @@ public class LanguageManagerTest {
   }
 
   @Test
-  public void testClear() {
+  void testClear() {
     this.sut.loadLabelsFromResources("language/labels", Locale.GERMANY);
     assertThat(this.sut.getLabelKeys(Locale.GERMANY), hasSize(1));
     this.sut.loadMessagesFromResources("language/messages", Locale.FRANCE);

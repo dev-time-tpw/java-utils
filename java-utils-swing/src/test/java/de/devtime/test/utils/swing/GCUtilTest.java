@@ -4,24 +4,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.devtime.utils.swing.GcUtil;
 
-public class GCUtilTest {
+class GCUtilTest {
 
   @Test
-  public void testConfigGCWithNull() {
+  void testConfigGCWithNull() {
     assertThrows(IllegalArgumentException.class, () -> GcUtil.configGc(null, 1, 2, 3, 4, 5.0, 6.0, 7, 8, null));
   }
 
   @Test
-  public void testConfigGC() {
+  void testConfigGC() {
     GridBagConstraints gc = new GridBagConstraints();
     GcUtil.configGc(gc, 1, 2, 3, 4, 5.0, 6.0, 7, 8, new Insets(11, 22, 33, 44));
     assertThat(gc.gridx, is(equalTo(1)));

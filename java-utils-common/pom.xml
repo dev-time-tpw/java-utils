@@ -7,16 +7,23 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>java-utils-resources</artifactId>
+	<artifactId>java-utils-common</artifactId>
 	<packaging>jar</packaging>
 
-	<name>dev|time java-utils (resources)</name>
-	<description>A collection of several utilities to access different resources</description>
+	<name>dev|time java-utils (common)</name>
+	<description>Contains common utilities and helper classes</description>
 
 	<properties></properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>de.devtime.java-utils</groupId>
+				<artifactId>java-utils-bom</artifactId>
+				<version>${java-utils.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
@@ -28,27 +35,26 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<!-- Project dependencies -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.reflections</groupId>
-			<artifactId>reflections</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
+			<groupId>de.devtime.java-utils</groupId>
+			<artifactId>java-utils-logging</artifactId>
 		</dependency>
 
+		<!-- Common dependencies -->
 		<dependency>
-			<groupId>com.github.romankh3</groupId>
-			<artifactId>image-comparison</artifactId>
-			<scope>test</scope>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>nl.jqno.equalsverifier</groupId>
+			<artifactId>equalsverifier</artifactId>
 		</dependency>
 	</dependencies>
 </project>

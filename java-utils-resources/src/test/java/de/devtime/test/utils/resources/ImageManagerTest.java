@@ -10,8 +10,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,9 +23,9 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.github.romankh3.image.comparison.ImageComparison;
 import com.github.romankh3.image.comparison.model.ImageComparisonResult;
@@ -34,22 +33,22 @@ import com.github.romankh3.image.comparison.model.ImageComparisonState;
 
 import de.devtime.utils.resources.ImageManager;
 
-public class ImageManagerTest {
+class ImageManagerTest {
 
   private ImageManager sut = ImageManager.getInstance();
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     this.sut.clear();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     this.sut.clear();
   }
 
   @Test
-  public void testLoadAllImagesFromResources() {
+  void testLoadAllImagesFromResources() {
     this.sut.loadAllImagesFromResources();
 
     Optional<Image> greenImage = this.sut.getImage("20x20_green-bmp");
@@ -70,7 +69,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testLoadAllImagesFromResourcesInImagesDir() {
+  void testLoadAllImagesFromResourcesInImagesDir() {
     this.sut.loadAllImagesFromResources("images");
 
     Optional<Image> greenImage = this.sut.getImage("20x20_green-bmp");
@@ -91,7 +90,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testLoadAllImagesFromResourcesInSpecialDir() {
+  void testLoadAllImagesFromResourcesInSpecialDir() {
     this.sut.loadAllImagesFromResources("images/red");
 
     Optional<Image> redImage = this.sut.getImage("20x20_red-bmp");
@@ -106,7 +105,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testLoadAllImagesFromResourceInUpperDir() {
+  void testLoadAllImagesFromResourceInUpperDir() {
     this.sut.loadAllImagesFromResources("images/upper");
 
     assertThat(this.sut.getImageNames(), hasSize(6));
@@ -116,42 +115,42 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testLoadAllImagesFromResourcesWithBmpExtension() {
+  void testLoadAllImagesFromResourcesWithBmpExtension() {
     this.sut.loadAllImagesFromResources("images", ".bmp");
     assertThat(this.sut.getImageNames(), hasSize(2));
     assertThat(this.sut.getImageNames(), containsInAnyOrder("20x20_red-bmp", "20x20_green-bmp"));
   }
 
   @Test
-  public void testLoadAllImagesFromResourcesWithGifExtension() {
+  void testLoadAllImagesFromResourcesWithGifExtension() {
     this.sut.loadAllImagesFromResources("images", ".gif");
     assertThat(this.sut.getImageNames(), hasSize(2));
     assertThat(this.sut.getImageNames(), containsInAnyOrder("20x20_red-gif", "20x20_green-gif"));
   }
 
   @Test
-  public void testLoadAllImagesFromResourcesWithIcoExtension() {
+  void testLoadAllImagesFromResourcesWithIcoExtension() {
     this.sut.loadAllImagesFromResources("images", ".ico");
     assertThat(this.sut.getImageNames(), hasSize(2));
     assertThat(this.sut.getImageNames(), containsInAnyOrder("20x20_red-ico", "20x20_green-ico"));
   }
 
   @Test
-  public void testLoadAllImagesFromResourcesWithJpgExtension() {
+  void testLoadAllImagesFromResourcesWithJpgExtension() {
     this.sut.loadAllImagesFromResources("images", ".jpg");
     assertThat(this.sut.getImageNames(), hasSize(2));
     assertThat(this.sut.getImageNames(), containsInAnyOrder("20x20_red-jpg", "20x20_green-jpg"));
   }
 
   @Test
-  public void testLoadAllImagesFromResourcesWithPngExtension() {
+  void testLoadAllImagesFromResourcesWithPngExtension() {
     this.sut.loadAllImagesFromResources("images", ".png");
     assertThat(this.sut.getImageNames(), hasSize(3));
     assertThat(this.sut.getImageNames(), containsInAnyOrder("20x20_red-png", "20x20_green-png", "97461-png"));
   }
 
   @Test
-  public void testLoadAllImagesFromResourcesWithTifExtension() {
+  void testLoadAllImagesFromResourcesWithTifExtension() {
     this.sut.loadAllImagesFromResources("images", ".tif");
     assertThat(this.sut.getImageNames(), hasSize(2));
     assertThat(this.sut.getImageNames(), containsInAnyOrder("20x20_red-tif", "20x20_green-tif"));
@@ -160,7 +159,7 @@ public class ImageManagerTest {
   //  @Test(timeout = 500)
   // FIXME Use mocked webserver for URL test
   // by morrigan on 03.11.2021
-  public void testLoadImageFromUrl() throws IOException {
+  void testLoadImageFromUrl() throws IOException {
     URL url = new URL("https://render.guildwars2.com/file/25B230711176AB5728E86F5FC5F0BFAE48B32F6E/97461.png");
     this.sut.loadImageFromUrl("97461-png", url);
     Optional<Image> image = this.sut.getImage("97461-png");
@@ -168,31 +167,31 @@ public class ImageManagerTest {
     BufferedImage actualImage = (BufferedImage) image.get();
     BufferedImage expectedImage = ImageIO.read(getClass().getResourceAsStream("/images/97461.png"));
     ImageComparisonResult result = new ImageComparison(expectedImage, actualImage).compareImages();
-    assertEquals(ImageComparisonState.MATCH, result.getImageComparisonState());
+    assertThat(result.getImageComparisonState(), is(equalTo(ImageComparisonState.MATCH)));
   }
 
   //  @Test(timeout = 500)
   // FIXME Use mocked webserver for URL test
   // by morrigan on 03.11.2021
-  public void testLoadImageFromMissingUrl() throws IOException {
+  void testLoadImageFromMissingUrl() throws IOException {
     URL url = new URL("https://render.guildwars2.com/file/25B230711176AB5728E86F5FC5F0BFAE48B32F6E/9746.png");
     assertThrows(IOException.class, () -> this.sut.loadImageFromUrl("9746-png", url));
   }
 
   @Test
-  public void testGetImageWithNameEqualToNull() {
+  void testGetImageWithNameEqualToNull() {
     Optional<Image> image = this.sut.getImage(null);
     assertThat(image, is(emptyOptional()));
   }
 
   @Test
-  public void testGetImageWithMissingImage() {
+  void testGetImageWithMissingImage() {
     Optional<Image> image = this.sut.getImage("missingimage");
     assertThat(image, is(emptyOptional()));
   }
 
   @Test
-  public void testGetImageWithDimensionEqualToNull() {
+  void testGetImageWithDimensionEqualToNull() {
     this.sut.loadAllImagesFromResources("images/red");
     NullPointerException exception = assertThrows(NullPointerException.class,
         () -> this.sut.getImage("20x20_red-png", null));
@@ -200,7 +199,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageWithDimension() {
+  void testGetImageWithDimension() {
     this.sut.loadAllImagesFromResources("images/red");
     Optional<Image> image = this.sut.getImage("20x20_red-png", new Dimension(10, 10));
     assertThat(image, is(optionalWithValue()));
@@ -209,7 +208,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageWithInvalidWidthScale() {
+  void testGetImageWithInvalidWidthScale() {
     this.sut.loadAllImagesFromResources("images/red");
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
         () -> this.sut.getImage("20x20_red-png", 0, 20));
@@ -217,7 +216,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageWithInvalidHeightScale() {
+  void testGetImageWithInvalidHeightScale() {
     this.sut.loadAllImagesFromResources("images/red");
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
         () -> this.sut.getImage("20x20_red-png", 20, 0));
@@ -225,7 +224,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageWithScaleWidth() {
+  void testGetImageWithScaleWidth() {
     this.sut.loadAllImagesFromResources("images/red");
     Optional<Image> image = this.sut.getImage("20x20_red-png", 10, 20);
     assertThat(image, is(optionalWithValue()));
@@ -234,7 +233,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageWithScaleHeight() {
+  void testGetImageWithScaleHeight() {
     this.sut.loadAllImagesFromResources("images/red");
     Optional<Image> image = this.sut.getImage("20x20_red-png", 20, 10);
     assertThat(image, is(optionalWithValue()));
@@ -243,7 +242,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageWithScaleWidthAndHeight() {
+  void testGetImageWithScaleWidthAndHeight() {
     this.sut.loadAllImagesFromResources("images/red");
     Optional<Image> image = this.sut.getImage("20x20_red-png", 10, 10);
     assertThat(image, is(optionalWithValue()));
@@ -252,19 +251,19 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageIconWithNameEqualToNull() {
+  void testGetImageIconWithNameEqualToNull() {
     Optional<ImageIcon> image = this.sut.getImageIcon(null);
     assertThat(image, is(emptyOptional()));
   }
 
   @Test
-  public void testGetImageIconWithMissingImage() {
+  void testGetImageIconWithMissingImage() {
     Optional<ImageIcon> image = this.sut.getImageIcon("missingimage");
     assertThat(image, is(emptyOptional()));
   }
 
   @Test
-  public void testGetImageIconWithDimension() {
+  void testGetImageIconWithDimension() {
     this.sut.loadAllImagesFromResources("images/red");
     Optional<ImageIcon> image = this.sut.getImageIcon("20x20_red-png", new Dimension(10, 10));
     assertThat(image, is(optionalWithValue()));
@@ -273,7 +272,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageIconWithInvalidWidthScale() {
+  void testGetImageIconWithInvalidWidthScale() {
     this.sut.loadAllImagesFromResources("images/red");
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
         () -> this.sut.getImageIcon("20x20_red-png", 0, 20));
@@ -281,7 +280,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageIconWithInvalidHeightScale() {
+  void testGetImageIconWithInvalidHeightScale() {
     this.sut.loadAllImagesFromResources("images/red");
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
         () -> this.sut.getImageIcon("20x20_red-png", 20, 0));
@@ -289,7 +288,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageIconWithInvalidDimension() {
+  void testGetImageIconWithInvalidDimension() {
     this.sut.loadAllImagesFromResources("images/red");
     NullPointerException exception = assertThrows(NullPointerException.class,
         () -> this.sut.getImageIcon("20x20_red-png", null));
@@ -297,7 +296,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageIconWithScaleWidth() {
+  void testGetImageIconWithScaleWidth() {
     this.sut.loadAllImagesFromResources("images/red");
     Optional<ImageIcon> image = this.sut.getImageIcon("20x20_red-png", 10, 20);
     assertThat(image, is(optionalWithValue()));
@@ -306,7 +305,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageIconWithScaleHeight() {
+  void testGetImageIconWithScaleHeight() {
     this.sut.loadAllImagesFromResources("images/red");
     Optional<ImageIcon> image = this.sut.getImageIcon("20x20_red-png", 20, 10);
     assertThat(image, is(optionalWithValue()));
@@ -315,7 +314,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testGetImageIconWithScaleWidthAndHeight() {
+  void testGetImageIconWithScaleWidthAndHeight() {
     this.sut.loadAllImagesFromResources("images/red");
     Optional<ImageIcon> image = this.sut.getImageIcon("20x20_red-png", 10, 10);
     assertThat(image, is(optionalWithValue()));
@@ -324,7 +323,7 @@ public class ImageManagerTest {
   }
 
   @Test
-  public void testClear() {
+  void testClear() {
     this.sut.loadAllImagesFromResources("images");
     assertThat(this.sut.getImageNames(), is(not(empty())));
     this.sut.clear();

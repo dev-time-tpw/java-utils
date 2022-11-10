@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.devtime.java-utils</groupId>
+		<artifactId>java-utils</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>java-utils-bom</artifactId>
+	<packaging>pom</packaging>
+
+	<name>dev|time java-utils (bom)</name>
+	<description>Bill of materials of the java-utils project.</description>
+
+	<properties></properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- java-utils-common: Contains common utilities and helper classes -->
+			<dependency>
+				<groupId>de.devtime.java-utils</groupId>
+				<artifactId>java-utils-common</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<!-- java-utils-logging: Contains logging support classes -->
+			<dependency>
+				<groupId>de.devtime.java-utils</groupId>
+				<artifactId>java-utils-logging</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<!-- java-utils-resources: Contains support classes for resource access -->
+			<dependency>
+				<groupId>de.devtime.java-utils</groupId>
+				<artifactId>java-utils-resources</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<!-- java-utils-swing: Contains support classes for java swing -->
+			<dependency>
+				<groupId>de.devtime.java-utils</groupId>
+				<artifactId>java-utils-swing</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

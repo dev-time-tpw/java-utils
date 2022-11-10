@@ -14,28 +14,28 @@ import java.awt.Font;
 import java.awt.geom.AffineTransform;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.devtime.utils.resources.FontManager;
 
-public class FontManagerTest {
+class FontManagerTest {
 
   private FontManager sut = FontManager.getInstance();
 
-  @Before
+  @BeforeEach
   public void setup() {
     this.sut.clear();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     this.sut.clear();
   }
 
   @Test
-  public void testLoadAllFontsFromResources() {
+  void testLoadAllFontsFromResources() {
     this.sut.loadAllFontsFromResources();
 
     Optional<Font> cronosRegular = this.sut.getFont("cronos-pro-regular");
@@ -52,13 +52,13 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testLoadAllFontsFromResourcesWithDirEqualsToNull() {
+  void testLoadAllFontsFromResourcesWithDirEqualsToNull() {
     this.sut.loadAllFontsFromResources(null);
     assertThat(this.sut.getFontNames(), hasSize(4));
   }
 
   @Test
-  public void testLoadAllFontsFromResourcesInFontDir() {
+  void testLoadAllFontsFromResourcesInFontDir() {
     this.sut.loadAllFontsFromResources("font");
 
     Optional<Font> cronosRegular = this.sut.getFont("cronos-pro-regular");
@@ -75,7 +75,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testLoadAllFontsFromResourcesInSpecialDir() {
+  void testLoadAllFontsFromResourcesInSpecialDir() {
     this.sut.loadAllFontsFromResources("font/special");
 
     Optional<Font> menomonia = this.sut.getFont("menomonia");
@@ -89,7 +89,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testLoadAllFontsFromResourceInUpperDir() {
+  void testLoadAllFontsFromResourceInUpperDir() {
     this.sut.loadAllFontsFromResources("font/upper");
 
     assertThat(this.sut.getFontNames(), hasSize(2));
@@ -97,7 +97,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testLoadAllFontsFromResourcesWithDirectoryTypeAndFileEstension() {
+  void testLoadAllFontsFromResourcesWithDirectoryTypeAndFileEstension() {
     this.sut.loadAllFontsFromResources("font/special", Font.TRUETYPE_FONT, ".ttf");
 
     Optional<Font> menomonia = this.sut.getFont("menomonia");
@@ -111,19 +111,19 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testGetFontWithFontnameEqualToNull() {
+  void testGetFontWithFontnameEqualToNull() {
     Optional<Font> font = this.sut.getFont(null);
     assertThat(font, is(emptyOptional()));
   }
 
   @Test
-  public void testGetFontWithMissingFont() {
+  void testGetFontWithMissingFont() {
     Optional<Font> font = this.sut.getFont("missingfont");
     assertThat(font, is(emptyOptional()));
   }
 
   @Test
-  public void testGetFontWithGivenSize() {
+  void testGetFontWithGivenSize() {
     this.sut.loadAllFontsFromResources("font/special");
     Optional<Font> font = this.sut.getFont("menomonia", 26f);
     assertThat(font, is(optionalWithValue()));
@@ -131,7 +131,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testGetFontWithGivenStyle() {
+  void testGetFontWithGivenStyle() {
     this.sut.loadAllFontsFromResources("font/special");
     Optional<Font> font = this.sut.getFont("menomonia", Font.BOLD);
     assertThat(font, is(optionalWithValue()));
@@ -139,7 +139,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testGetFontWithGivenTransformation() {
+  void testGetFontWithGivenTransformation() {
     this.sut.loadAllFontsFromResources("font/special");
     AffineTransform affineTransform = new AffineTransform();
     affineTransform.rotate(Math.PI / 2);
@@ -149,7 +149,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testGetFontWithGivenSizeAndStyle() {
+  void testGetFontWithGivenSizeAndStyle() {
     this.sut.loadAllFontsFromResources("font/special");
     Optional<Font> font = this.sut.getFont("menomonia", 26f, Font.BOLD);
     assertThat(font, is(optionalWithValue()));
@@ -158,7 +158,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testGetFontWithGivenStyleAndTransformation() {
+  void testGetFontWithGivenStyleAndTransformation() {
     this.sut.loadAllFontsFromResources("font/special");
     AffineTransform affineTransform = new AffineTransform();
     affineTransform.rotate(Math.PI / 2);
@@ -169,7 +169,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testGetFontWithGivenSizeAndTransformation() {
+  void testGetFontWithGivenSizeAndTransformation() {
     this.sut.loadAllFontsFromResources("font/special");
     AffineTransform affineTransform = new AffineTransform();
     affineTransform.rotate(Math.PI / 2);
@@ -180,7 +180,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testGetFontWithGivenSizeAndStyleAndTransformation() {
+  void testGetFontWithGivenSizeAndStyleAndTransformation() {
     this.sut.loadAllFontsFromResources("font/special");
     AffineTransform affineTransform = new AffineTransform();
     affineTransform.rotate(Math.PI / 2);
@@ -192,7 +192,7 @@ public class FontManagerTest {
   }
 
   @Test
-  public void testClear() {
+  void testClear() {
     this.sut.loadAllFontsFromResources("font");
     assertThat(this.sut.getFontNames(), is(not(empty())));
     this.sut.clear();

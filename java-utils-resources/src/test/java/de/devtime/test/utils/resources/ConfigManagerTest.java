@@ -8,80 +8,80 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.MissingResourceException;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.devtime.utils.resources.ConfigManager;
 
-public class ConfigManagerTest {
+class ConfigManagerTest {
 
   private static final int ABSOLUTE_AMOUNT_OF_CONFIG_ITEMS = 2;
 
   private ConfigManager sut = ConfigManager.getInstance();
 
-  @Before
+  @BeforeEach
   public void setup() {
     this.sut.clear();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     this.sut.clear();
   }
 
   @Test
-  public void testLoadConfigsWithFilenameEqualToNull() throws IOException {
+  void testLoadConfigsWithFilenameEqualToNull() throws IOException {
     assertThrows(IllegalArgumentException.class, () -> this.sut.loadAllConfigsFromResources(null));
   }
 
   @Test
-  public void testLoadConfigsWithEmptyFilename() throws IOException {
+  void testLoadConfigsWithEmptyFilename() throws IOException {
     assertThrows(IllegalArgumentException.class, () -> this.sut.loadAllConfigsFromResources(""));
   }
 
   @Test
-  public void testLoadConfigsWithNullStream() throws IOException {
+  void testLoadConfigsWithNullStream() throws IOException {
     assertThrows(IOException.class, () -> this.sut.loadAllConfigsFromResources("/null"));
   }
 
   @Test
-  public void testLoadConfigsWithNullStream2() throws IOException {
+  void testLoadConfigsWithNullStream2() throws IOException {
     assertThrows(IOException.class, () -> this.sut.loadAllConfigsFromResources("null"));
   }
 
   @Test
-  public void testLoadConfigsWithoutSlashPrefix() throws IOException {
+  void testLoadConfigsWithoutSlashPrefix() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     assertThat(this.sut.getConfigKeys(), hasSize(ABSOLUTE_AMOUNT_OF_CONFIG_ITEMS));
   }
 
   @Test
-  public void testLoadConfigsWithSlashPrefix() throws IOException {
+  void testLoadConfigsWithSlashPrefix() throws IOException {
     this.sut.loadAllConfigsFromResources("/config.properties");
     assertThat(this.sut.getConfigKeys(), hasSize(ABSOLUTE_AMOUNT_OF_CONFIG_ITEMS));
   }
 
   @Test
-  public void testGetOptConfigWithNullKey() {
+  void testGetOptConfigWithNullKey() {
     Optional<String> config = this.sut.getOptConfig(null);
     assertThat(config, is(emptyOptional()));
   }
 
   @Test
-  public void testGetOptConfigWithMissingKey() {
+  void testGetOptConfigWithMissingKey() {
     Optional<String> config = this.sut.getOptConfig("missing");
     assertThat(config, is(emptyOptional()));
   }
 
   @Test
-  public void testGetOptConfigWithExistingKey() throws IOException {
+  void testGetOptConfigWithExistingKey() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     Optional<String> config = this.sut.getOptConfig("serverMode");
     assertThat(config, is(optionalWithValue()));
@@ -89,7 +89,7 @@ public class ConfigManagerTest {
   }
 
   @Test
-  public void testGetConfigWithNullKey() throws IOException {
+  void testGetConfigWithNullKey() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     MissingResourceException exception = assertThrows(MissingResourceException.class,
         () -> this.sut.getConfig(null));
@@ -101,7 +101,7 @@ public class ConfigManagerTest {
   }
 
   @Test
-  public void testGetConfigWithMissingKey() throws IOException {
+  void testGetConfigWithMissingKey() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     MissingResourceException exception = assertThrows(MissingResourceException.class,
         () -> this.sut.getConfig("missing"));
@@ -113,31 +113,30 @@ public class ConfigManagerTest {
   }
 
   @Test
-  public void testGetConfigWithExistingKey() throws IOException {
+  void testGetConfigWithExistingKey() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     String config = this.sut.getConfig("serverMode");
     assertThat(config, is(equalTo("local")));
   }
 
   @Test
-  public void testGetConfigWithArguments() throws IOException {
+  void testGetConfigWithArguments() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     String config = this.sut.getConfig("command", "/tmp");
     assertThat(config, is(equalTo("cd /tmp")));
   }
 
   @Test
-  public void testGetConfigKeys() throws IOException {
+  void testGetConfigKeys() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     assertThat(this.sut.getConfigKeys(), containsInAnyOrder("serverMode", "command"));
   }
 
   @Test
-  public void testClear() throws IOException {
+  void testClear() throws IOException {
     this.sut.loadAllConfigsFromResources("config.properties");
     assertThat(this.sut.getConfigKeys(), hasSize(ABSOLUTE_AMOUNT_OF_CONFIG_ITEMS));
     this.sut.clear();
     assertThat(this.sut.getConfigKeys(), hasSize(0));
   }
-
 }

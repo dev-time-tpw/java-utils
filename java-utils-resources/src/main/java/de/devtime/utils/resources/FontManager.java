@@ -3,6 +3,7 @@ package de.devtime.utils.resources;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.geom.AffineTransform;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,11 +12,16 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
+import org.reflections.scanners.Scanners;
+import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 /**
  * All fonts that are required for an application are managed here. Since applications can run on different operating
@@ -187,21 +193,29 @@ public class FontManager {
    * @since 0.0.1
    */
   public void loadAllFontsFromResources(String directory, int fontType, String... fileExtensions) {
-    Reflections reflections;
-    if (directory == null) {
-      reflections = new Reflections("", new ResourcesScanner());
-    } else {
-      reflections = new Reflections(directory, new ResourcesScanner());
-    }
-    Set<String> availableFonts = new HashSet<>();
+    PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+    Set<File> availableFonts = new HashSet<>();
     for (String fileExtension : fileExtensions) {
-      availableFonts.addAll(reflections.getResources(Pattern.compile(".*\\" + fileExtension)));
+      try {
+        String locationPattern;
+        if(StringUtils.isBlank(directory)) {
+          locationPattern = "classpath:/**/*"+fileExtension;
+        } else {
+          locationPattern = "classpath:/"+directory+"/**/*"+fileExtension;
+        }
+        Resource[] resources = resolver.getResources(locationPattern);
+        for (Resource resource : resources) {
+          availableFonts.add(resource.getFile());
+        }
+      } catch (IOException e) {
+        LOG.error(e.getMessage(), e);
+      }
     }
 
-    for (String fontPath : availableFonts) {
-      String baseName = FilenameUtils.getBaseName(fontPath);
+    for (File fontFile : availableFonts) {
+      String baseName = FilenameUtils.getBaseName(fontFile.getAbsolutePath());
       try {
-        addFont(baseName, fontType, fontPath);
+        addFont(baseName, fontType, fontFile);
       } catch (FontFormatException | IOException e) {
         LOG.error(e.getMessage(), e);
       }
@@ -232,8 +246,8 @@ public class FontManager {
 
   // checkstyle:WriteTag OFF
 
-  private void addFont(String fontName, int fontType, String filePath) throws FontFormatException, IOException {
-    this.fontCache.put(fontName, Font.createFont(fontType, getClass().getResourceAsStream("/" + filePath)));
+  private void addFont(String fontName, int fontType, File file) throws FontFormatException, IOException {
+    this.fontCache.put(fontName, Font.createFont(fontType, file));
   }
 
   private Optional<Font> getFont(String fontName, Optional<Float> size, Optional<Integer> style,

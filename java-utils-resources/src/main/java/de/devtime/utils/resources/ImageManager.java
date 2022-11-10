@@ -1,8 +1,10 @@
 package de.devtime.utils.resources;
 
 import java.awt.Dimension;
+import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -21,6 +23,8 @@ import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.google.common.base.Preconditions;
 
@@ -187,18 +191,31 @@ public class ImageManager {
    * @since 0.0.1
    */
   public void loadAllImagesFromResources(String directory, String... fileExtensions) {
-    Reflections reflections = new Reflections(directory, new ResourcesScanner());
-    Set<String> availableImages = new HashSet<>();
+    PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+    Set<File> availableImages = new HashSet<>();
     for (String fileExtension : fileExtensions) {
-      availableImages.addAll(reflections.getResources(Pattern.compile(".*\\" + fileExtension)));
+      try {
+        String locationPattern;
+        if(StringUtils.isBlank(directory)) {
+          locationPattern = "classpath:/**/*"+fileExtension;
+        } else {
+          locationPattern = "classpath:/"+directory+"/**/*"+fileExtension;
+        }
+        Resource[] resources = resolver.getResources(locationPattern);
+        for (Resource resource : resources) {
+          availableImages.add(resource.getFile());
+        }
+      } catch (IOException e) {
+        LOG.error(e.getMessage(), e);
+      }
     }
-
-    for (String imagePath : availableImages) {
-      String baseName = FilenameUtils.getBaseName(imagePath);
-      String extension = FilenameUtils.getExtension(imagePath);
+    
+    for (File imageFile : availableImages) {
+      String baseName = FilenameUtils.getBaseName(imageFile.getAbsolutePath());
+      String extension = FilenameUtils.getExtension(imageFile.getAbsolutePath());
       String key = StringUtils.join(baseName, "-", extension);
       try {
-        addImage(key, imagePath);
+        addImage(key, imageFile);
       } catch (IOException e) {
         LOG.error(e.getMessage(), e);
       }
@@ -207,7 +224,7 @@ public class ImageManager {
     int amount = getImageNames().size();
     LOG.info("{} image{} loaded successfully.", amount, amount > 1 ? "s" : "");
   }
-
+  
   /**
    * Loads a image based on its URL and adds it with the given image name to this manager.
    *
@@ -241,8 +258,8 @@ public class ImageManager {
 
   // checkstyle:WriteTag OFF
 
-  private void addImage(String imageName, String filePath) throws IOException {
-    this.imageCache.put(imageName, ImageIO.read(getClass().getResourceAsStream("/" + filePath)));
+  private void addImage(String imageName, File file) throws IOException {
+    this.imageCache.put(imageName, ImageIO.read(file.getAbsoluteFile()));
   }
 
   private Optional<ImageIcon> getImageIcon(String imageName, Optional<Integer> scaleToWidth,
